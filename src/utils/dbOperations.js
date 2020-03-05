@@ -6,7 +6,7 @@ const retriveAllProducts = async () => {
 };
 
 const addProductsToDb = async (data) => {
-	await db.products.bulkCreate(data, {fields:['id', 'name', 'price', 'quantity', 'imageLink']});
+	await db.products.bulkCreate(data, {fields:['id', 'name', 'price', 'quantity', 'imageLink', 'category']});
 };
 
 module.exports={retriveAllProducts, addProductsToDb};

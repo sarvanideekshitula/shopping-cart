@@ -1,14 +1,14 @@
 const axios = require('axios').default;
 const productAPI = require('../constants/apis');
 
-const fetchAllProducts = () => {
-	const products = axios.get(productAPI);
+const fetchAllProducts = async () => {
+	const products = await axios.get(productAPI);
 	return products;
 };
 
-const fetchCategory = (productId) => {
-	const category = axios.get(`${productAPI}/${productId}/category`);
-	return category;
+const fetchCategory = async (productId) => {
+	const category = await axios.get(`${productAPI}/${productId}/category`);	
+	return { productId: productId, category: category.data.category };
 };
 
-module.exports = {fetchAllProducts, fetchCategory};
+module.exports = { fetchAllProducts, fetchCategory };
