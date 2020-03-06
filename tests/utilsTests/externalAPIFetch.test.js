@@ -42,7 +42,8 @@ describe('The fetchCategory function', () => {
 	it('should fetch the category of product from api', async() => {
 		const mockGet = jest.spyOn(axios, 'get');
 		const data = {
-			'category': 'household'
+			'category': {data:{category:'household'}},
+			'productId': 1
 		};
 		mockGet.mockResolvedValue(data);
 		const result = await fetchCategory();
