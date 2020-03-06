@@ -12,7 +12,6 @@ const getAllProducts = async (request, h) => {
 			productData.forEach((product) => {
 				categoryFetchPromise.push(externalAPIFetch.fetchCategory(product.id));
 			});
-
 			const productCategories = await Promise.all(categoryFetchPromise);
 			productData.forEach(product => {
 				const category = productCategories.find(productCategory => productCategory.productId === product.id);
@@ -23,10 +22,30 @@ const getAllProducts = async (request, h) => {
 			products = await dbOperations.retriveAllProducts();
 		}
 		return h.response(`${JSON.stringify(products)}`).code(200);
-	}
-	catch (error) {
+	} catch (error) {
 		return h.response(error.message).code(500);
 	}
 };
 
-module.exports = { getAllProducts };
+const getProductsByFilter = async (request, h) => {
+	try {
+		let products = [];
+		const filterCategory = request.params.categoryName;
+		products = await dbOperations.retriveByFilter(filterCategory);
+		return h.response(`${JSON.stringify(products)}`).code(200);
+	} catch (error) {
+		return h.response(error.message).code(500);
+	}
+};
+
+const getAllCategories = async (request, h) => {
+	try {
+		let categories = [];
+		categories = await dbOperations.retriveAllCategories();
+		return h.response(`${JSON.stringify(categories)}`).code(200);
+	} catch (error) {
+		return h.response(error.message).code(500);
+	}
+};
+
+module.exports = { getAllProducts, getProductsByFilter, getAllCategories };
